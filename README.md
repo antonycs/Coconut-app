@@ -1,2 +1,2 @@
 # hello-world
-familiarizing github
+familiarizing github *just edit readme to understand commit and branch*
