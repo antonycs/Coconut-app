@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>coconut</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--  <link rel="stylesheet" href="../../maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="../../maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+-->
+    <script>
+        window.jQuery = window.$ = require('./jquery.min.js');
+    </script>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <script src="./bootstrap.min.js" charset="utf-8"></script>
+    <script src="./renderer.js"></script>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="cname" style="box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important">
+            <!---->
+            <blockquote>
+                <h2>PAPPAY</h2>
+            </blockquote>
+
+        </div>
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active"><a data-toggle="tab" href="#marketrate">Market Rate</a></li>
+            <li><a data-toggle="tab" href="#purchase">Purchase</a></li>
+            <li><a data-toggle="tab" href="#sales">Sales</a></li>
+            <li><a data-toggle="tab" href="#summary">Summary</a></li>
+            <li><a data-toggle="tab" href="#settings">Settings</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="marketrate" class="tab-pane fade in active">
+                <h3 class="text-primary">Market Rate</h3>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="mr-date">Date:</label>
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control" id="mr-date" min="2016-01-01" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label class="control-label col-sm-2" for="rate-kg">Rate per Kg:</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="rate-kg" placeholder="Enter the market rate.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="rate-no">Rate per Number:</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="rate-no" placeholder="Enter the market rate per 1 number">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="percent-sale">Percentage applied on Sold Price:</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="percent-sale" placeholder="Enter the percentage to be applied with sold price">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-9">
+                            <button type="button" class="btn btn-primary" onclick="insertmr()">Save</button>
+
+                            <div class="alert" id="mrmsg">
+                                <!--inner html to print-->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="purchase" class="tab-pane fade">
+                <h3 class="text-primary">Purchase</h3>
+                <form class="form-horizontal" role="form">
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="purchasedate">Purchased on:</label>
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control" id="purchasedate" min="2016-01-01">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="qty">Quantity:</label>
+                        <div class="col-sm-9">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optradio" id="pr1">kg</label>
+                                <label>
+                                    <input type="radio" name="optradio" id="pr2">number</label>
+                            </div>
+                            <input type="number" class="form-control" id="qty" placeholder="enter the quantity of goods">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-9">
+                            <button type="button" class="btn btn-primary" onclick="insertpurchase()">Save</button>
+                            <div class="alert" id="purchasemsg">
+                                <!--inner html to print-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="amount">Amount:</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="amount">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="sales" class="tab-pane fade">
+                <h3 class="text-primary">Sales</h3>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="sold-on-date">Sold on:</label>
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control" id="sold-on-date" min="2016-01-01">
+                        </div>
+                    </div>
+                    <div class="well">
+                        <h5 class="text-muted">Consumption details</h5>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="purchasedate-in-sales">Purchase Date:</label>
+                            <div class="col-sm-3">
+                                <input type="date" class="form-control" id="purchasedate-in-sales" min="2016-01-01">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="qtyconsumed-in-sales">Quantity of goods:</label>
+                            <div class="col-sm-9">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optradio1" id="sr1">kg</label>
+                                    <label>
+                                        <input type="radio" name="optradio1" id="sr2">number</label>
+                                </div>
+                                <input type="number" class="form-control" id="qtyconsumed-in-sales" placeholder="enter the quantity of goods consumed">
+                                <div class="alert" id="qtyerrinsales">
+                                    <!--inner html to print-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-9">
+                                <button type="button" class="btn btn-primary" onclick="addconsumption()">Add</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-offset-2 col-sm-9" id="cumulate-entry">
+                                <!--inner html to print-->
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="other-expense">Other Expense:</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="other-expense" placeholder="Enter the Other Expense">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="sold-price">Sold Price:</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="sold-price" placeholder="Press save to view total sold price">
+
+                            <div class="alert" id="soldpriceerr">
+                                <!--inner html to print-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-9">
+                            <button type="button" class="btn btn-primary" onclick="insertsales()">Save</button>
+                            <div class="alert" id="salesmsg">
+                                <!--inner html to print  -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="today-profit">Profit on current transaction:</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="today-profit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="summary" class="tab-pane fade">
+                <h3 class="text-primary">Summary</h3>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="from-date">From:</label>
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control" id="from-date" min="2016-01-01">
+                        </div>
+                        <label class="control-label col-sm-2" for="to-date">To:</label>
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control" id="to-date" min="2016-01-01">
+
+                        </div>
+                        <div class="text-info" id="dateerr">
+                            <!--inner html to print-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-9">
+                            <button type="button" class="btn btn-primary" onclick="showsummary()">Explore !</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-5" id="expenseview">Total EXPENSE during this date:</label>
+                        <!--inner html to print and clear the content of label after finish the view!-->
+                        <label class="control-label col-sm-5" id="profitview">Total PROFIT during this date:</label>
+                    </div>
+                    <!--testing...................-->
+                    <div id="box">
+                    </div>
+                    <div id="box1">
+                    </div>
+
+
+                    <!--testing...................-->
+                </form>
+            </div>
+
+           <div id="settings" class="tab-pane fade">
+                <h3 class="text-primary">Settings</h3>
+                <form class="form-horizontal" role="form">
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="deletedate">Date:</label>
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control" id="deletedate" min="2016-01-01">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="choose">Choose:</label>
+                        <div class="col-sm-9">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optradio2" id="sd1">Sales</label>
+                                <label>
+                                    <input type="radio" name="optradio2" id="sd2">Purchase</label>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-9">
+                            <button type="button" class="btn btn-primary" onclick="showsettings()">Print</button>
+                            <div class="alert" id="deletemsg">
+                                <!--inner html to print-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- testiiiiiiiinggggggggg-->
+                    <div id="box2">
+
+                    </div>
+                    <!-- testiiiiiiiinggggggggg-->
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer style="position: absolute;
+
+    font-family: verdana;
+    width: 100%;
+
+    padding-right: 15px;
+    text-align:center;
+    ">
+        <abbr title="Developed by Antony c s"><p class="text-muted"> antonycs007@gmail.com</p></abbr>
+    </footer>
+</body>
+
+</html>
