@@ -1,2 +1,9 @@
-# hello-world
-familiarizing github *just edit readme to understand commit and branch*
+# Coconut-app
+simple tracking transactions in cocnut mill
+Todo
+----
+- [x] Inserting market rate
+- [x] Inserting purchase details
+- [x] Inserting sales details
+- [ ] Show summary [not completed]
+- [ ] Settings [edit entries, delete entries]
