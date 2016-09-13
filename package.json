@@ -1,10 +1,9 @@
 {
-  "name": "fapp",
+  "name": "Coconut-app",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "build":"electron-packager . MYapp"
+    "start": "electron ."
   },
   "devDependencies": {
     "electron-packager": "^7.5.1",
