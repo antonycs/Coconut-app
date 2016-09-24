@@ -1,5 +1,5 @@
 # Coconut-app
-simple tracking transactions in cocnut mill
+simple tracking of transactions in coconut mill
 Todo
 ----
 - [x] Inserting market rate
