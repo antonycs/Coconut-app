@@ -22,7 +22,6 @@ var mrsamp = {
     mrdate: today,
     kgrate: 0,
     norate: 0,
-    percent: 0,
     mrd: today
 };
 var purchasesamp = {
@@ -61,7 +60,8 @@ function insertmr() {
                 mrd: Date.parse(tdate),
                 kgrate: parseInt(document.getElementById('rate-kg').value, 10),
                 norate: parseInt(document.getElementById('rate-no').value, 10),
-                percent: parseInt(document.getElementById('percent-sale').value, 10)
+                //percent: parseInt(document.getElementById('percent-sale').value, 10)
+                // NOTE: percent taken to sales directly
             }
         }, {
             upsert: true
@@ -71,6 +71,8 @@ function insertmr() {
             db.mr.loadDatabase(); //used to reload th DB to confirm the update operation
 
             $(document).ready(function() {
+              $("#mrmsg").removeClass("alert-success alert-info");
+              $("#mrmsg").html("");
                 $("#mrmsg").addClass("alert-success");
                 $("#mrmsg").html('<strong>success!</strong>&nbsp&nbspMarket rate inserted');
             });
@@ -166,6 +168,8 @@ function insertpurchase() {
 
                         });
                     }
+                    $("#purchasemsg").removeClass("alert-success alert-info");
+                    $("#purchasemsg").html("");
 
                     $("#purchasemsg").addClass("alert-success");
                     $("#purchasemsg").html('<strong>success!</strong>&nbsp&nbspPurchased details inserted.');
@@ -209,7 +213,7 @@ function addconsumption() {
 
                     } else {
                         if (document.getElementById('sr1').checked) {
-                            buyamt += quanti * (doc.kgrate / 3);
+                            buyamt += quanti * ((doc.kgrate / 3)/100);//NOTE:divide by 100 to change the fraction position
                             salessamp.pdate[salessamp.pdate.length] = doc.mrdate;
                             salessamp.kg[salessamp.kg.length] = parseInt(quanti, 10);
                             salessamp.no[salessamp.no.length] = parseInt(0, 10);
@@ -240,9 +244,10 @@ function addconsumption() {
 
 function insertsales() {
     var saledate = document.getElementById('sold-on-date').value;
-    if (saledate.length === 0 || buyamt === 0) {
+    var percent = document.getElementById('percent-sale').value;
+    if (saledate.length === 0 || buyamt === 0||percent.length===0) {
         $("#soldpriceerr").addClass("alert-info");
-        $("#soldpriceerr").html('<strong>info!</strong>&nbsp&nbspFill sold on date fields or fill consumed details.');
+        $("#soldpriceerr").html('<strong>info!</strong>&nbsp&nbspFill sold on date field or percentage field or consumed details.');
     } else {
         db.mr.findOne({
             mrdate: saledate
@@ -261,8 +266,8 @@ function insertsales() {
                 //console.log(totkg,totno);
                 salessamp.sprice = totkg * doc.kgrate;
                 salessamp.sprice += totno * doc.norate;
-
-                salessamp.sprice = (salessamp.sprice * doc.percent) / 100;
+// TODO: add percent to sale db
+                salessamp.sprice = (salessamp.sprice * percent) / 100;
                 $("#sold-price").val(salessamp.sprice);
 
                 salessamp.oexpense = document.getElementById('other-expense').value;
@@ -322,6 +327,8 @@ function insertsales() {
                             db.sales.loadDatabase();
                         });
                     }
+                    $("#soldpriceerr").removeClass("alert-success alert-info");
+                    $("#soldpriceerr").html("");
                     $("#salesmsg").addClass("alert-success");
                     $("#salesmsg").html('<strong>success!</strong>&nbsp&nbspSales details inserted.');
                     buyamt = 0;
@@ -550,9 +557,7 @@ function showsettings() {
                         }).appendTo(mytable1);
                         if (i == -1) {
                             for (var j = 0; j < cols; j++) {
-                                $('<th></th>').text(parray[j]).attr({
-                                    class: ["danger"]
-                                }).appendTo(row);
+                                $('<th></th>').text(parray[j]).attr({class: ["danger"]}).appendTo(row);
                             }
                         } else {
                             for (var j = 0; j < cols; j++) {
@@ -611,7 +616,7 @@ $(document).ready(function() {
         $("#mrmsg").html("");
         $("#rate-kg").val(null);
         $("#rate-no").val(null);
-        $("#percent-sale").val(null);
+
     });
 
     $("#mr-date").change(function() {
@@ -622,12 +627,12 @@ $(document).ready(function() {
             if (doc === null) {
                 $("#rate-kg").val(null);
                 $("#rate-no").val(null);
-                $("#percent-sale").val(null);
+                //$("#percent-sale").val(null);
             } else {
 
                 $("#rate-kg").val(doc.kgrate);
                 $("#rate-no").val(doc.norate);
-                $("#percent-sale").val(doc.percent);
+                //$("#percent-sale").val(doc.percent);
             }
         });
     });
@@ -652,6 +657,7 @@ $(document).ready(function() {
         $("#salesmsg").html("");
         $("#other-expense").val(null);
         $("#sold-price").val(null);
+        $("#percent-sale").val(null);
     });
     $("#from-date").focus(function() {
         $("#dateerr").removeClass("alert-info");
