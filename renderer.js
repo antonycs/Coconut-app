@@ -48,7 +48,7 @@ var salessamp = {
 function insertmr() {
     var tdate = document.getElementById('mr-date').value;
 
-    if ((document.getElementById('rate-kg').value.length === 0) || (document.getElementById('rate-no').value.length === 0) || (document.getElementById('percent-sale').value.length === 0) || (document.getElementById('mr-date').value.length === 0)) {
+    if ((document.getElementById('rate-kg').value.length === 0) || (document.getElementById('rate-no').value.length === 0) || (document.getElementById('mr-date').value.length === 0)) {
         //print----------------------------------------------------------------
         $("#mrmsg").addClass("alert-info");
         $("#mrmsg").html('<strong>info!</strong>&nbsp&nbspFill all fields');
@@ -108,6 +108,8 @@ function insertpurchase() {
                     $(document).ready(function() {
                         kgv = quantity;
                         am = quantity * (doc.kgrate / 3);
+                        am = am/100;
+                      // NOTE: new edit divide am by 100 to change fraction !
                         $("#amount").val(am);
                         nov = 0.0;
                     });
